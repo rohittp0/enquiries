@@ -1,8 +1,7 @@
 import sys
 import textwrap
-from curtsies import Input, FSArray , CursorAwareWindow, fsarray
+from curtsies import Input, CursorAwareWindow, fsarray
 from curtsies.fmtfuncs import red, bold, green, on_blue, yellow
-import curtsies
 
 from .error import SelectionAborted
 

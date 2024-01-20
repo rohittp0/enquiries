@@ -1,7 +1,7 @@
 import sys
 import warnings
 
-from curtsies import Input, FSArray , CursorAwareWindow, fsarray
+from curtsies import Input, CursorAwareWindow, fsarray
 from curtsies.fmtfuncs import red, bold, green, on_blue, yellow
 
 from .error import SelectionAborted
@@ -11,8 +11,10 @@ import random
 CHECKED = '\u25c9 '
 UNCHECKED = '\u25cc '
 
+
 def _no_fmt(s):
     return s
+
 
 def choose(prompt, choices, multi=False, preselected=()):
     """
@@ -76,6 +78,7 @@ def choose(prompt, choices, multi=False, preselected=()):
 
     return options
 
+
 class Choice:
     def __init__(self, obj, display=None):
         self._obj = obj
@@ -93,7 +96,8 @@ class Choice:
 
 
 class ChoiceList:
-    def __init__(self, choices, prompt=None, multi=False, preselected=(), sel_fmt=bold, des_fmt=_no_fmt, selected=CHECKED, deselected=UNCHECKED):
+    def __init__(self, choices, prompt=None, multi=False, preselected=(), sel_fmt=bold, des_fmt=_no_fmt,
+                 selected=CHECKED, deselected=UNCHECKED):
         if prompt:
             self._prompt = fsarray([bold(line) for line in prompt.split('\n')])
         else:
@@ -158,13 +162,13 @@ class ChoiceList:
         for checked, option in self._choices:
             current = self._choices[self._idx][1] == option
             fmt = self._sel_fmt if current else self._des_fmt
-            opt_arr = option.render(fmt, width-3)
-            arr[l:l+len(opt_arr), 2:width] = opt_arr
+            opt_arr = option.render(fmt, width - 3)
+            arr[l:l + len(opt_arr), 2:width] = opt_arr
             if self._multi:
                 state = self._sel if checked else self._des
             else:
                 state = '> ' if current else '  '
-            arr[l:l+1, 0:2] = fsarray([state])
+            arr[l:l + 1, 0:2] = fsarray([state])
             l += len(opt_arr)
         return arr
 
@@ -177,10 +181,10 @@ class ChoiceList:
         return self._choices[self._idx][1]._obj
 
     def next(self):
-        self._idx = min(len(self)-1, self._idx+1)
+        self._idx = min(len(self) - 1, self._idx + 1)
 
     def prev(self):
-        self._idx = max(0, self._idx-1)
+        self._idx = max(0, self._idx - 1)
 
     def __len__(self):
         return len(self._choices)

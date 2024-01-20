@@ -35,7 +35,7 @@ def confirm(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Take useful user input')
     parser.add_argument('-p', '--prompt', help='Prompt to display')
-    parser.add_argument('-q', '--quiet',  action='store_true', help='Hide prompt after closing')
+    parser.add_argument('-q', '--quiet', action='store_true', help='Hide prompt after closing')
 
     subparsers = parser.add_subparsers(dest='option')
     select_parser = subparsers.add_parser('select', help='Select from multiple options')
