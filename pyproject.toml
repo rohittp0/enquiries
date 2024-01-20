@@ -17,17 +17,17 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://gitlab.com/facingBackwards/enquiries"
 "Bug Tracker" = "https://gitlab.com/facingBackwards/enquiries/-/issues"
-"GitHub" = ""
+"GitHub" = "https://github.com/rohittp0/enquiries"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-click = "^7.1.2"
+click = "^8.1.7"
 curtsies = { git = "https://github.com/bpython/curtsies.git", branch = "switch-to-blessed" }
 
 [tool.poetry.dev-dependencies]
-ptpython = "^3.0.7"
-pytest = "^7.3.1"
-pytest-cov = "^4.0"
+ptpython = "^3.0.25"
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry>=1.0.8"]
