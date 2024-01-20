@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "enquiries"
-version = "0.3.0pre"
+version = "0.4.0pre"
 description = "Ask simple questions - get simple answers"
 authors = [
     "Peter Holloway <holloway.p.r@gmail.com>",
