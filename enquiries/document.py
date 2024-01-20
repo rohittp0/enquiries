@@ -11,7 +11,7 @@ from curtsies.fmtfuncs import bold
 
 blank = re.compile(r'^\s+')
 
-WORD_BREAK = re.compile('[^\w]')
+WORD_BREAK = re.compile(r'\W')
 
 Cursor = namedtuple('Cursor', ['row', 'column'])
 
