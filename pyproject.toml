@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "enquiries"
+name = "enquiries-cross-platform"
 version = "0.4.0pre"
 description = "Ask simple questions - get simple answers"
 authors = [
@@ -15,9 +15,8 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://gitlab.com/facingBackwards/enquiries"
-"Bug Tracker" = "https://gitlab.com/facingBackwards/enquiries/-/issues"
-"GitHub" = "https://github.com/rohittp0/enquiries"
+"Homepage" = "https://github.com/rohittp0/enquiries"
+"Bug Tracker" = "https://github.com/rohittp0/enquiries/issues"
 
 [tool.poetry.dependencies]
 python = "^3.11"
