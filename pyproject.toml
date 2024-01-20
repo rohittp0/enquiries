@@ -2,7 +2,10 @@
 name = "enquiries"
 version = "0.3.0pre"
 description = "Ask simple questions - get simple answers"
-authors = ["Peter Holloway <holloway.p.r@gmail.com>"]
+authors = [
+    "Peter Holloway <holloway.p.r@gmail.com>",
+    "Rohit TP <tprohit9@gmail.com>"
+]
 license = "MPL-2.0"
 readme = "README.rst"
 keywords = ['cli', 'prompt', 'input']
@@ -14,11 +17,12 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://gitlab.com/facingBackwards/enquiries"
 "Bug Tracker" = "https://gitlab.com/facingBackwards/enquiries/-/issues"
+"GitHub" = ""
 
 [tool.poetry.dependencies]
-python = "^3.7"
-curtsies = "^0.3.4"
+python = "^3.11"
 click = "^7.1.2"
+curtsies = { git = "https://github.com/bpython/curtsies.git", branch = "switch-to-blessed" }
 
 [tool.poetry.dev-dependencies]
 ptpython = "^3.0.7"
