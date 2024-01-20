@@ -24,7 +24,7 @@ def select(args):
         print(args.prompt + ' ', file=sys.stderr, end='\n' if args.multi else '')
     # if we're being piped to somewhere else, always print choice
     if not args.quiet or not sys.stdout.isatty():
-        print('\n'.join(choice))
+        print('\n'.join(choice) if isinstance(choice, list) else choice)
 
 
 def confirm(args):
@@ -50,5 +50,5 @@ if __name__ == "__main__":
     confirm_parser.add_argument('-t', '--default-true', action='store_true', help='Default to true instead of false')
     confirm_parser.set_defaults(func=confirm)
 
-    args = parser.parse_args()
-    args.func(args)
+    args_parser = parser.parse_args()
+    args_parser.func(args_parser)

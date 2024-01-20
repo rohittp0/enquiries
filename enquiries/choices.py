@@ -2,11 +2,9 @@ import sys
 import warnings
 
 from curtsies import Input, CursorAwareWindow, fsarray
-from curtsies.fmtfuncs import red, bold, green, on_blue, yellow
 
+from .libs.formats import bold
 from .error import SelectionAborted
-
-import random
 
 CHECKED = '\u25c9 '
 UNCHECKED = '\u25cc '
@@ -22,9 +20,9 @@ def choose(prompt, choices, multi=False, preselected=()):
 
     Args
     ----
-    prompt : str
+    @param prompt : str
         The prompt to display to the users above the options
-    choices : iterable
+    @param choices : iterable
         The range of choices to offer to the user.
 
         * If this is a ``dict`` type, the ``__str__`` representation of the keys
@@ -34,10 +32,10 @@ def choose(prompt, choices, multi=False, preselected=()):
 
     Keyword Args
     ------------
-    multi : bool
+    @param multi : bool
         Whether the user can choose multiple options
         Defaults to False
-    preselected : iterable
+    @param preselected : iterable
         Optional argument when choosing multiple options
         set a preselection of values using a list
         * for ``dict`` type choices use a list of keys
@@ -89,10 +87,14 @@ class Choice:
             self._disp = str(self._obj)
         return self._disp
 
-    def render(self, fmt, width):
+    def render(self, fmt, _):
         lines = str(self).split('\n')
         arr = fsarray(fmt(line) for line in lines)
         return arr
+
+    @property
+    def obj(self):
+        return self._obj
 
 
 class ChoiceList:
@@ -115,7 +117,7 @@ class ChoiceList:
         if isinstance(choices, dict):
             self._choices = [[k in preselected, Choice(v, k)] for k, v in choices.items()]
         else:
-            self._choices = [[i in preselected, Choice(c)] for i, c in enumerate(choices)]
+            self._choices = [[i in preselected, Choice(ch)] for i, ch in enumerate(choices)]
         self._sel_fmt = sel_fmt
         self._des_fmt = des_fmt
         self._sel = selected
@@ -158,27 +160,27 @@ class ChoiceList:
         arr = fsarray('', width=width)
         if self._prompt:
             arr.rows = self._prompt.rows + arr.rows
-        l = len(arr)
+        length = len(arr)
         for checked, option in self._choices:
             current = self._choices[self._idx][1] == option
             fmt = self._sel_fmt if current else self._des_fmt
             opt_arr = option.render(fmt, width - 3)
-            arr[l:l + len(opt_arr), 2:width] = opt_arr
+            arr[length:length + len(opt_arr), 2:width] = opt_arr
             if self._multi:
                 state = self._sel if checked else self._des
             else:
                 state = '> ' if current else '  '
-            arr[l:l + 1, 0:2] = fsarray([state])
-            l += len(opt_arr)
+            arr[length:length + 1, 0:2] = fsarray([state])
+            length += len(opt_arr)
         return arr
 
     def get_selection(self):
-        options = [item[1]._obj for item in self._choices if item[0]]
+        options = [item[1].obj for item in self._choices if item[0]]
         if self._multi:
             return options
         elif options:
             return options[0]
-        return self._choices[self._idx][1]._obj
+        return self._choices[self._idx][1].obj
 
     def next(self):
         self._idx = min(len(self) - 1, self._idx + 1)
@@ -191,7 +193,7 @@ class ChoiceList:
 
     def __getitem__(self, key):
         item = self._choices[key]
-        return item[1]._obj
+        return item[1].obj
 
     def __setitem__(self, key, value):
         self._choices[key] = [False, Choice(value)]
@@ -200,7 +202,7 @@ class ChoiceList:
         del self._choices[key]
 
     def __contains__(self, item):
-        return item in [i[1]._obj for i in self._choices]
+        return item in [i[1].obj for i in self._choices]
 
 
 if __name__ == "__main__":

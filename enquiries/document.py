@@ -7,7 +7,8 @@ from collections import namedtuple
 
 from curtsies import Input, FSArray, CursorAwareWindow
 from curtsies.events import PasteEvent
-from curtsies.fmtfuncs import bold
+
+from .libs.formats import bold
 
 blank = re.compile(r'^\s+')
 
@@ -67,7 +68,6 @@ class Document:
             if len(split) == 1:
                 return
             left = '\n'.join((*split[:-2], split[-2][:len(split[-1])]))
-            old_len = len(self._lbuffer)
             new_len = len(left)
             self._lbuffer, self._rbuffer = self._lbuffer[:new_len], self._lbuffer[new_len:] + self._rbuffer
         elif direction == Dir.DOWN:
@@ -150,13 +150,13 @@ def prompt(message):
     """
     with CursorAwareWindow(out_stream=sys.stderr, extra_bytes_callback=lambda x: x, hide_cursor=False) as window:
         left = window.width // 3 - 1
-        prompt = textwrap.wrap(message, left) + ['']
-        p_lines = len(prompt)
-        right = window.width - max(len(line) for line in prompt) - 1
+        prompt_text = textwrap.wrap(message, left) + ['']
+        p_lines = len(prompt_text)
+        right = window.width - max(len(line) for line in prompt_text) - 1
         left = window.width - right - 1
         document = Document()
         view = FSArray(p_lines, window.width)
-        view[0:p_lines, 0:left] = [bold(line) for line in prompt]
+        view[0:p_lines, 0:left] = [bold(line) for line in prompt_text]
         window.render_to_terminal(view, (0, left + 1))
         with Input() as keys:
             for key in keys:
@@ -226,7 +226,7 @@ def _current_word(words, column):
             return 0, 0
         end = count + len(w)
         if column < end:
-            return (i, column - count)
+            return i, column - count
         if column == end:
             if i == lines - 1:  # end of last line
                 return i, column - count

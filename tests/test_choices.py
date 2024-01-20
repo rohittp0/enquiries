@@ -35,17 +35,17 @@ def test_del_item(clist):
 
 
 def test_iterate(clist):
-    choices = iter(clist)
-    assert next(choices) == 'abcd'
-    assert next(choices) == 'efgh'
-    assert next(choices) == 'ijkl'
+    choices_list = iter(clist)
+    assert next(choices_list) == 'abcd'
+    assert next(choices_list) == 'efgh'
+    assert next(choices_list) == 'ijkl'
     with pytest.raises(StopIteration):
-        next(choices)
+        next(choices_list)
 
 
 def test_reverse(clist):
-    choices = reversed(clist)
-    assert next(choices) == 'ijkl'
+    choices_list = reversed(clist)
+    assert next(choices_list) == 'ijkl'
 
 
 def test_no_choices():

@@ -1,9 +1,10 @@
 import sys
 import textwrap
+
 from curtsies import Input, CursorAwareWindow, fsarray
-from curtsies.fmtfuncs import red, bold, green, on_blue, yellow
 
 from .error import SelectionAborted
+from .libs.formats import bold
 
 
 def _keys(true, false, default):
@@ -17,7 +18,8 @@ def _keys(true, false, default):
     return ' [{}/{}]'.format(true, false)
 
 
-def confirm(prompt, *, true='yes', false='no', default=False, single_key=False, true_key='y', false_key='n', clear=True):
+def confirm(prompt, *, true='yes', false='no', default=False, single_key=False, true_key='y', false_key='n',
+            clear=True):
     """
     Get a True/False value from your users
 
@@ -26,25 +28,25 @@ def confirm(prompt, *, true='yes', false='no', default=False, single_key=False, 
 
     Args
     ----
-        prompt : str
+        @param prompt : str
             A string to display to the user to show what you're asking
     Keyword Args
     ------------
-        true : str
+        @param true : str
             The text to display when choosing the true option
-        false : str
+        @param false : str
             The text to display when choosing the false option
-        default : bool
+        @param default : bool
             The default return value if no explicit selection is made
-        single_key : bool
+        @param single_key : bool
             If True, don't require return key to confirm selection
-        true_key : str
+        @param true_key : str
             The key to select true value - defaults to 'y'.
             Should be a single character.
-        false_key : str
+        @param false_key : str
             The key to select false value - defaults to 'n'.
             Should be a single character.
-        clear : bool
+        @param clear : bool
             Clear the prompt after getting the response - defaults to ``True``
     Returns
     -------
@@ -61,9 +63,8 @@ def confirm(prompt, *, true='yes', false='no', default=False, single_key=False, 
     """
     with CursorAwareWindow(out_stream=sys.stderr, extra_bytes_callback=lambda x: x, keep_last_line=not clear) as window:
         prompt = prompt + _keys(true_key, false_key, default)
-        width = min(min(window.width, 80) - len(true+false) - 5, len(prompt))
+        width = min(min(window.width, 80) - len(true + false) - 5, len(prompt))
         prompt_arr = fsarray((bold(line) for line in textwrap.wrap(prompt, width=width)), width=window.width)
-        choice = fsarray(['  '.join((true, false))])
         window.render_to_terminal(prompt_arr)
         selected = None
         try:
@@ -87,11 +88,10 @@ def confirm(prompt, *, true='yes', false='no', default=False, single_key=False, 
                         elif i == '<ESC>':
                             raise SelectionAborted(selected)
                     finally:
-                        if (selected is not None):
+                        if selected is not None:
                             choice = fsarray([true if selected else false])
-                            prompt_arr[0:1, width+1:width+len(true+false)+5] = choice
+                            prompt_arr[0:1, width + 1:width + len(true + false) + 5] = choice
                             window.render_to_terminal(prompt_arr)
         except KeyboardInterrupt as ke:
             raise SelectionAborted(selected) from ke
     return selected
-

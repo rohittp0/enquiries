@@ -89,14 +89,12 @@ def test_initial_cursor(full_doc):
 
 
 def test_move_cursor_left(full_doc):
-    cursor = full_doc.cursor
     full_doc.move_cursor(direction=document.Dir.LEFT)
     assert full_doc.cursor.column == 2
     assert full_doc.cursor.row == 2
 
 
 def test_move_cursor_right(full_doc):
-    cursor = full_doc.cursor
     full_doc.move_cursor(direction=document.Dir.RIGHT)
     assert full_doc.cursor.column == 4
     assert full_doc.cursor.row == 2
@@ -104,7 +102,6 @@ def test_move_cursor_right(full_doc):
 
 
 def test_move_cursor_up(full_doc):
-    cursor = full_doc.cursor
     full_doc.move_cursor(direction=document.Dir.UP)
     assert full_doc.cursor.column == 3
     assert full_doc.cursor.row == 1
@@ -120,7 +117,6 @@ def test_move_up_from_top():
 
 
 def test_move_cursor_down(full_doc):
-    cursor = full_doc.cursor
     full_doc.move_cursor(direction=document.Dir.DOWN)
     assert full_doc.cursor.column == 0
     assert full_doc.cursor.row == 3

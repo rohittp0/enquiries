@@ -14,8 +14,10 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
 
+import enquiries
+
+sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
@@ -23,12 +25,9 @@ project = 'Enquiries'
 copyright = '2018, Peter Holloway'
 author = 'Peter Holloway'
 
-# The short X.Y version
-import enquiries
 version = enquiries.__version__
 # The full version, including alpha/beta/rc tags
 release = version
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -75,7 +74,6 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -110,7 +108,6 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Enquiriesdoc'
 
-
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
@@ -139,7 +136,6 @@ latex_documents = [
      'Peter Holloway', 'manual'),
 ]
 
-
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
@@ -148,7 +144,6 @@ man_pages = [
     (master_doc, 'enquiries', 'Enquiries Documentation',
      [author], 1)
 ]
-
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -160,7 +155,6 @@ texinfo_documents = [
      author, 'Enquiries', 'One line description of project.',
      'Miscellaneous'),
 ]
-
 
 # -- Options for Epub output -------------------------------------------------
 
@@ -181,7 +175,6 @@ epub_copyright = copyright
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
-
 
 # -- Extension configuration -------------------------------------------------
 
